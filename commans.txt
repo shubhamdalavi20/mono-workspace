@@ -8,9 +8,17 @@ ng s mfe-app -o
 /// module federation -- main thing to focus
 npm i webpack webpack-cli --save-dev
 ng add @angular-architects/module-federation --project host-app --port 4200
-
 ng add @angular-architects/module-federation --project mfe-app --port 4300
 
 ///
-ng g module todo-list --project=mfe-app
 ng g c high-chart --project=mfe-app
+
+//////////////// In webpack.config.js ///////////////
+    // name: "mfeApp",
+    // filename: "remoteEntry.js",
+    // exposes: {
+    //     './Component': './projects/mfe-app/src/app/app.component.ts',
+    // },
+
+remove the above code and add specific component or module in older angular version (before 14)
+we can add name of common library in shared obj bellow the above commented code
