@@ -1,0 +1,16 @@
+ng new mono-workspace --no-create-application
+cd mono-workspace
+ng g application host-app --routing --style=scss
+ng g application mfe-app --routing --style=scss
+ng s host-app -o
+ng s mfe-app -o
+
+/// module federation -- main thing to focus
+npm i webpack webpack-cli --save-dev
+ng add @angular-architects/module-federation --project host-app --port 4200
+
+ng add @angular-architects/module-federation --project mfe-app --port 4300
+
+///
+ng g module todo-list --project=mfe-app
+ng g c high-chart --project=mfe-app
