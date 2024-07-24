@@ -13,12 +13,38 @@ ng add @angular-architects/module-federation --project mfe-app --port 4300
 ///
 ng g c high-chart --project=mfe-app
 
-//////////////// In webpack.config.js ///////////////
-    // name: "mfeApp",
-    // filename: "remoteEntry.js",
-    // exposes: {
-    //     './Component': './projects/mfe-app/src/app/app.component.ts',
-    // },
+//////////////// In webpack.config.js of mfe-app///////////////
 
-remove the above code and add specific component or module in older angular version (before 14)
+// name: "mfeApp",
+// filename: "remoteEntry.js",
+// exposes: {
+//     './AppComponent': './projects/mfe-app/src/app/app.component.ts',
+// },
+
+uncomment the above code and add specific component or module in older angular version (before 14)
 we can add name of common library in shared obj bellow the above commented code
+add scriptType: "text/javascript" in output object in module.exports object (we can see this on the top of the file)
+remove library: { type: "module" }, in ModuleFederationPlugin object in plugins object in module.exports object (we can see this on the middle of the file)
+
+
+//////////////// In webpack.config.js of host-app///////////////
+add scriptType: "text/javascript" in output object in module.exports object (we can see this on the top of the file)
+remove library: { type: "module" }, in ModuleFederationPlugin object in plugins object in module.exports object (we can see this on the middle of the file)
+
+// name: "hostApp",
+
+// remotes: {
+//     "mfeApp": "http://localhost:4200/remoteEntry.js",
+// },
+
+uncomment the above code and change the parameters likes code given bellow
+
+remotes: {
+    "mfeApp": "mfeApp@http://localhost:4300/remoteEntry.js",
+
+},
+
+restart the applications (both)
+
+add the route in app route file in host-app as given in this file
+add router-outlet in app component html file in host app
